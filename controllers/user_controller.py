@@ -1,6 +1,6 @@
 # controllers/user_controller.py
 from flask import render_template, request, redirect, url_for, flash
-from models.user import User, db
+from models.user import User, db  # ← db viene del modelo
 
 def index():
     users = User.query.all()
@@ -11,7 +11,6 @@ def create():
         name = request.form['name']
         email = request.form['email']
         
-        # Verificar si email ya existe
         if User.query.filter_by(email=email).first():
             flash('Error: Este email ya está registrado.')
             return render_template('create.html')
@@ -31,7 +30,6 @@ def edit(user_id):
         name = request.form['name']
         email = request.form['email']
         
-        # Verificar email duplicado (excepto el propio)
         existing = User.query.filter(User.email == email, User.id != user_id).first()
         if existing:
             flash('Error: Este email ya está en uso.')

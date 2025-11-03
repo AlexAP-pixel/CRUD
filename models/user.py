@@ -1,42 +1,13 @@
 # models/user.py
-users = []  # Simulación de base de datos en memoria
-id_counter = 1
+from flask_sqlalchemy import SQLAlchemy
+db = SQLAlchemy()
 
-class User:
-    def __init__(self, name, email):
-        global id_counter
-        self.id = id_counter
-        self.name = name
-        self.email = email
-        id_counter += 1
+class User(db.Model):  # ← db viene de app.py
+    __tablename__ = 'users'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
 
-    @staticmethod
-    def get_all():
-        return users
-
-    @staticmethod
-    def get_by_id(user_id):
-        return next((u for u in users if u.id == user_id), None)
-
-    @staticmethod
-    def create(name, email):
-        user = User(name, email)
-        users.append(user)
-        return user
-
-    @staticmethod
-    def update(user_id, name, email):
-        user = User.get_by_id(user_id)
-        if user:
-            user.name = name
-            user.email = email
-        return user
-
-    @staticmethod
-    def delete(user_id):
-        global users
-        user = User.get_by_id(user_id)
-        if user:
-            users = [u for u in users if u.id != user_id]
-            return True
-        return False
+    def __repr__(self):
+        return f'<User {self.name}>'
