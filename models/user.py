@@ -2,7 +2,7 @@
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
-class User(db.Model):  # ← db viene de app.py
+class User(db.Model): 
     __tablename__ = 'users'
     
     id = db.Column(db.Integer, primary_key=True)
@@ -10,4 +10,4 @@ class User(db.Model):  # ← db viene de app.py
     email = db.Column(db.String(100), nullable=False, unique=True)
 
     def __repr__(self):
-        return f'<User {self.name}>'
+        return f'<User {self.name}>' # Representación del usuario

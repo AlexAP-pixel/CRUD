@@ -6,7 +6,7 @@ class Config:
 
     @staticmethod
     def get_db_uri():
-        server = 'localhost'           # o 'localhost\\SQLEXPRESS'
+        server = '(localdb)\SistemasAlex'           # o 'localhost\\SQLEXPRESS'
         database = 'users_db'
 
         params = urllib.parse.quote_plus(

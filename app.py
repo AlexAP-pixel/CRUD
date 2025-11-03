@@ -4,15 +4,16 @@ from config import Config
 from models.user import db as models_db, User  # ← Importa db del modelo
 from controllers.user_controller import index, create, edit, delete
 
-app = Flask(__name__)
-app.config.from_object(Config)
-app.config['SQLALCHEMY_DATABASE_URI'] = Config.get_db_uri()
+app = Flask(__name__) # Configura la app Flask
+app.config.from_object(Config) # Carga la configuración
+app.config['SQLALCHEMY_DATABASE_URI'] = Config.get_db_uri() # Configura la URI de la base de datos
 
-# ¡REEMPLAZA el db del modelo con el de Flask!
-models_db.init_app(app)
+app.secret_key = 'tu_clave_secreta_super_segura_123'
+
+models_db.init_app(app)  # Inicializa SQLAlchemy con la app
 
 with app.app_context():
-    models_db.create_all()
+    models_db.create_all() # Crea las tablas en la base de datos
 
 # Rutas
 @app.route('/')
